@@ -18,7 +18,8 @@ function[output_vector_X,output_vector_Y,output_vector_Z,output_value]=MultiClus
 
 ###
 Input:
-T: an order-3 tensor 
+T: an order-3 tensor. We currently take as input the gene expression tensor in log scale after correcting for technical covariates (e.g., ischemic time, etc). T_{ijk} represents the log (gene expression) for gene i, individual j and tissue k. 
+
 Ncomp: number of components to extract 
 nonnegative: 0 (without nonnegative constraints) or 1 (with nonnegative constraints)
 
