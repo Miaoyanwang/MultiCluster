@@ -20,7 +20,7 @@ function[output_vector_X,output_vector_Y,output_vector_Z,output_value]=MultiClus
 Input:
 T: an order-3 tensor 
 Ncomp: number of components to extract 
-nonnegative: 0 (without nonnegative constraints) or 1 (with nonnegative constraints); default is 0
+nonnegative: 0 (without nonnegative constraints) or 1 (with nonnegative constraints)
 
 ###
 Output:
