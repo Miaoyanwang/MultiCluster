@@ -2,13 +2,14 @@
 % Input:
 % T: an order-3 tensor 
 % Ncomp: number of components to extract 
+% nonnegative: 0 (without nonnegative constraints) or 1 (with nonnegative constraints); 
 % Output:
 % output_vector_X: a matrix with Ncomp columns, where each column is an estimated singular vector in the X-mode. 
 % output_vector_Y: a matrix with Ncomp columns, where each column is an estimated singular vector in the Y-mode.
-% output_vector_Z: a matrix with Ncomp columns, where each column is an estimated singular vector in the Z-mode. All entries in the Z-mode are forced to be non-negative. 
+% output_vector_Z: a matrix with Ncomp columns, where each column is an estimated singular vector in the Z-mode. When the ``nonnegative'' option is set to 1, all entries in the Z-mode are non-negative. 
 % output_value: a lenghth-Ncomp vector, where each value is an estimated singular value.
 
-function[output_vector_X,output_vector_Y,output_vector_Z,output_value]=MultiCluster(T,Ncomp)
+function[output_vector_X,output_vector_Y,output_vector_Z,output_value]=MultiCluster(T,Ncomp,nonnegative)
 
 d=size(T);
 d1=d(1);
@@ -30,11 +31,13 @@ for index =1:Ncomp
  [Lvector,~,Rvector]=svds(Matrix.Basis,1);
 output_vector_X(:,index)=Lvector;
 output_vector_Y(:,index)=Rvector;
-[B,I]=sort(abs(Rvector));
 vector=reshape(kron(Lvector,Rvector'),[1,d1*d2])*M;
+vector=vector/norm(vector);
                     
+ if(nonnegative==1)                   
 [Lvector,Rvector,vector]=positive(double(T),Lvector,Rvector,vector);
-                    
+end   
+
 output_vector_X(:,index)=Lvector;
 output_vector_Y(:,index)=Rvector;
 output_vector_Z(:,index)=vector;                  
@@ -49,8 +52,12 @@ M=reshape(double(T),[d1,d2*d3]);
 Matrix.Basis=reshape(Rspace,[d2,d3,1]);
 [Lvector,~,Rvector]=svds(Matrix.Basis,1);
 vector=M*reshape(kron(Lvector,Rvector'),[d2*d3,1]);
-                      
+vector=vector/norm(vector);
+         
+  if(nonnegative==1)                       
 [vector,Lvector,Rvector]=positive(double(T),vector,Lvector,Rvector');
+end
+                                  
 output_value_new=vector'*M*reshape(kron(Lvector,Rvector),[d2*d3,1]);
 
 
@@ -68,8 +75,12 @@ M=reshape(double(T_perm),[d2,d1*d3]);
 Matrix.Basis=reshape(Rspace,[d1,d3,1]);
 [Lvector,~,Rvector]=svds(Matrix.Basis,1);
 vector=M*reshape(kron(Lvector,Rvector'),[d1*d3,1]);
-                      
+vector=vector/norm(vector);
+        
+ if(nonnegative==1)  
 [Lvector,vector,Rvector]=positive(double(T),Lvector,vector,Rvector');
+end
+                                  
 output_value_new=vector'*M*reshape(kron(Lvector,Rvector),[d1*d3,1]); 
 
 
