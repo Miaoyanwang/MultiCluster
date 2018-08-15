@@ -5,6 +5,9 @@ Three-way clustering of multi-tissue multi-individual gene expression data using
 
 Miaoyan Wang, Jonathan Fischer, and Yun S. Song
 University of California, Berkeley
+
+The folder software contains Matlab functions and demos for semi-nonnegative tensor decomposition. 
+The folder supplementary data contain contain inferred gene modules in the GTEx data analysis.
 ###############################################################################
 
 Tensor decomposition with semi-nonnegative constraint:
