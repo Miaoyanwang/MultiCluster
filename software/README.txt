@@ -14,18 +14,16 @@ This software tool takes an order-3 tensor as input, and outputs the triplets of
 The package contains the main function MultiCluster.m and auxiliary function positive.m.  See demo.m for an example of using the main function. 
 
 
-function[output_vector_X,output_vector_Y,output_vector_Z,output_value]=MultiCluster(T,Ncomp,nonnegative)
+function[output_vector_X,output_vector_Y,output_vector_Z,output_value]=MultiCluster(T,Ncomp)
 
 ###
 Input:
-T: an order-3 tensor. We currently take as input the gene expression tensor in log scale after correcting for technical covariates (e.g., ischemic time, etc). T_{ijk} represents the log (gene expression) for gene i, individual j and tissue k. 
-
+T: an order-3 tensor 
 Ncomp: number of components to extract 
-nonnegative: 0 (without nonnegative constraints) or 1 (with nonnegative constraints)
 
 ###
 Output:
 output_vector_X: a matrix with Ncomp columns, where each column is an estimated singular vector in the X-mode. 
 output_vector_Y: a matrix with Ncomp columns, where each column is an estimated singular vector in the Y-mode.
-output_vector_Z: a matrix with Ncomp columns, where each column is an estimated singular vector in the Z-mode. When the ``nonnegative'' option is set to 1, all entries in the Z-mode are non-negative. 
+output_vector_Z: a matrix with Ncomp columns, where each column is an estimated singular vector in the Z-mode. All entries in the Z-mode are non-negative. 
 output_value: a vector of length Ncomp, where each value is an estimated singular value.
